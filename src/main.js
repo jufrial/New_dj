@@ -39,3 +39,57 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+let moveForward = false;
+let moveBackward = false;
+let moveLeft = false;
+let moveRight = false;
+let character;
+
+loader.load('/model/casual.glb', (gltf) => {
+  character = gltf.scene || gltf.scenes[0];
+  character.scale.set(1.5, 1.5, 1.5);
+  character.position.set(0, 0, 0);
+  scene.add(character);
+}, undefined, (error) => {
+  console.error("❌ Gagal memuat karakter:", error);
+});
+
+const joystick = nipplejs.create({
+  zone: document.getElementById('joystick-zone'),
+  mode: 'static',
+  position: { left: '60px', bottom: '60px' },
+  color: 'white',
+  size: 100
+});
+
+joystick.on('move', (evt, data) => {
+  const angle = data.angle.degree;
+  if (angle >= 45 && angle < 135) {
+    moveForward = true;
+  } else if (angle >= 225 && angle < 315) {
+    moveBackward = true;
+  } else if (angle >= 135 && angle < 225) {
+    moveLeft = true;
+  } else {
+    moveRight = true;
+  }
+});
+
+joystick.on('end', () => {
+  moveForward = moveBackward = moveLeft = moveRight = false;
+});
+
+// Gerakkan karakter di animasi
+function animate() {
+  requestAnimationFrame(animate);
+
+  if (character) {
+    if (moveForward) character.position.z -= 0.05;
+    if (moveBackward) character.position.z += 0.05;
+    if (moveLeft) character.position.x -= 0.05;
+    if (moveRight) character.position.x += 0.05;
+  }
+
+  renderer.render(scene, camera);
+}
+animate();
