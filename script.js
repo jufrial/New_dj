@@ -1,14 +1,16 @@
-// Karakter dan joystick
+// First-Person View - Kamera sebagai kepala karakter
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const karakter = {
+let karakter = {
   x: canvas.width / 2,
   y: canvas.height / 2,
-  size: 30,
-  color: "black",
+  size: 0, // Tidak ditampilkan karena sudut pandang orang pertama
+  speed: 2,
+  dx: 0,
+  dy: 0,
 };
 
 let joystick = {
@@ -19,24 +21,21 @@ let joystick = {
   dy: 0,
 };
 
-function drawKarakter() {
+function updateView() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.arc(karakter.x, karakter.y, karakter.size, 0, Math.PI * 2);
-  ctx.fillStyle = karakter.color;
-  ctx.fill();
+
+  // Gambar latar belakang sebagai pandangan first-person
+  ctx.fillStyle = "#aee"; // langit
+  ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
+  ctx.fillStyle = "#3c3"; // tanah
+  ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2);
+
+  requestAnimationFrame(updateView);
 }
 
-function updateKarakter() {
-  karakter.x += joystick.dx;
-  karakter.y += joystick.dy;
-  drawKarakter();
-  requestAnimationFrame(updateKarakter);
-}
+updateView();
 
-updateKarakter();
-
-// Joystick handling
+// Joystick
 const joystickEl = document.getElementById("joystick");
 const stick = document.createElement("div");
 stick.id = "joystick-inner";
@@ -52,12 +51,14 @@ joystickEl.addEventListener("touchmove", (e) => {
   if (!joystick.active) return;
   let moveX = e.touches[0].clientX - joystick.startX;
   let moveY = e.touches[0].clientY - joystick.startY;
-  joystick.dx = moveX * 0.05;
-  joystick.dy = moveY * 0.05;
+  karakter.dx = moveX * 0.05;
+  karakter.dy = moveY * 0.05;
+  karakter.x += karakter.dx * karakter.speed;
+  karakter.y += karakter.dy * karakter.speed;
 });
 
 joystickEl.addEventListener("touchend", () => {
   joystick.active = false;
-  joystick.dx = 0;
-  joystick.dy = 0;
+  karakter.dx = 0;
+  karakter.dy = 0;
 });
