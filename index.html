@@ -1,36 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dunia Juf - Pandangan Pribadi</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dunia Juf</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Background -->
-  <div id="background"></div>
-
-  <!-- Tangan karakter utama -->
-  <img id="hands" src="img/lengan_juf.png" alt="Tangan Juf">
-
-  <!-- Kontrol gaya gerak -->
-  <div id="mood-controls">
-    <button onclick="setMood('pelan')">Pelan</button>
-    <button onclick="setMood('takut')">Takut</button>
-    <button onclick="setMood('lari')">Lari</button>
-    <button onclick="setMood('terbirit')">Terbirit</button>
+  <!-- Gambar akan muncul otomatis dari script.js -->
+  
+  <!-- Tombol Kendali Gerak -->
+  <div id="kontrol-gerak">
+    <button id="pelan">Pelan</button>
+    <button id="takut">Takut</button>
+    <button id="lari">Lari</button>
+    <button id="terbirit">Terbirit</button>
   </div>
 
-  <!-- Kontrol analog (arah) -->
-  <div id="joystick">
-    <button onclick="move('up')">⬆️</button><br>
-    <button onclick="move('left')">⬅️</button>
-    <button onclick="move('down')">⬇️</button>
-    <button onclick="move('right')">➡️</button>
-  </div>
-
-  <!-- Skrip gerak dan interaksi -->
+  <!-- Panggil script -->
   <script src="script.js"></script>
 </body>
 </html>
