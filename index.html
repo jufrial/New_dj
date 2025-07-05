@@ -1,62 +1,63 @@
-body {
-  margin: 0;
-  overflow: hidden;
-  background: #cce0cc;
-  font-family: sans-serif;
+// Karakter dan joystick
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const karakter = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  size: 30,
+  color: "black",
+};
+
+let joystick = {
+  active: false,
+  startX: 0,
+  startY: 0,
+  dx: 0,
+  dy: 0,
+};
+
+function drawKarakter() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.arc(karakter.x, karakter.y, karakter.size, 0, Math.PI * 2);
+  ctx.fillStyle = karakter.color;
+  ctx.fill();
 }
 
-#canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
+function updateKarakter() {
+  karakter.x += joystick.dx;
+  karakter.y += joystick.dy;
+  drawKarakter();
+  requestAnimationFrame(updateKarakter);
 }
 
-#ui {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  z-index: 2;
-}
+updateKarakter();
 
-#joystick {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  width: 100px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  touch-action: none;
-}
+// Joystick handling
+const joystickEl = document.getElementById("joystick");
+const stick = document.createElement("div");
+stick.id = "joystick-inner";
+joystickEl.appendChild(stick);
 
-#joystick-inner {
-  width: 50px;
-  height: 50px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
-  position: relative;
-  top: 25px;
-  left: 25px;
-  transform: translate(-50%, -50%);
-}
+joystickEl.addEventListener("touchstart", (e) => {
+  joystick.active = true;
+  joystick.startX = e.touches[0].clientX;
+  joystick.startY = e.touches[0].clientY;
+});
 
-.controls {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 2;
-}
+joystickEl.addEventListener("touchmove", (e) => {
+  if (!joystick.active) return;
+  let moveX = e.touches[0].clientX - joystick.startX;
+  let moveY = e.touches[0].clientY - joystick.startY;
+  joystick.dx = moveX * 0.05;
+  joystick.dy = moveY * 0.05;
+});
 
-.controls button {
-  width: 40px;
-  height: 40px;
-  background-color: #eef;
-  border: none;
-  border-radius: 6px;
-}
+joystickEl.addEventListener("touchend", () => {
+  joystick.active = false;
+  joystick.dx = 0;
+  joystick.dy = 0;
+});
