@@ -15,23 +15,6 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
-// Debug overlay
-const debugDiv = document.createElement('div');
-debugDiv.style.position = 'absolute';
-debugDiv.style.bottom = '10px';
-debugDiv.style.left = '10px';
-debugDiv.style.padding = '10px';
-debugDiv.style.backgroundColor = 'rgba(0,0,0,0.6)';
-debugDiv.style.color = 'white';
-debugDiv.style.fontSize = '12px';
-debugDiv.style.zIndex = '9999';
-debugDiv.innerText = "🔍 Debug aktif...\n";
-document.body.appendChild(debugDiv);
-function log(msg) {
-  console.log(msg);
-  debugDiv.innerText += msg + "\n";
-}
-
 // Lighting
 scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.5));
 const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -43,18 +26,40 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1.4, 0);
 controls.update();
 
+// Safe Debug function
+function logDebug(msg) {
+  if (typeof window !== "undefined" && typeof document !== "undefined") {
+    const debugBox = document.getElementById('debug') || (() => {
+      const d = document.createElement('div');
+      d.id = 'debug';
+      d.style.position = 'absolute';
+      d.style.bottom = '10px';
+      d.style.left = '10px';
+      d.style.padding = '10px';
+      d.style.backgroundColor = 'rgba(0,0,0,0.5)';
+      d.style.color = 'white';
+      d.style.fontSize = '12px';
+      d.style.zIndex = '9999';
+      document.body.appendChild(d);
+      return d;
+    })();
+    debugBox.innerText += msg + "\\n";
+  }
+  console.log(msg);
+}
+
 // Load karakter
-log("🚀 Memuat model: /model/karakter.glb");
+logDebug("🚀 Memuat model: /model/karakter.glb");
 const loader = new GLTFLoader();
 loader.load('/model/karakter.glb', (gltf) => {
   const model = gltf.scene || gltf.scenes[0];
   model.scale.set(1.5, 1.5, 1.5);
   model.position.set(0, 0, 0);
   scene.add(model);
-  log("✅ Karakter berhasil dimuat.");
+  logDebug("✅ Karakter berhasil dimuat.");
 }, undefined, (err) => {
-  log("❌ Gagal memuat karakter:");
-  log(err.message || err);
+  logDebug("❌ Gagal memuat karakter:");
+  logDebug(err.message || err);
 });
 
 function animate() {
@@ -62,3 +67,9 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
