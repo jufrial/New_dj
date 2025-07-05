@@ -2,67 +2,35 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Dunia Juf</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dunia Juf - Pandangan Pribadi</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: linear-gradient(#9cf, #6c6);
-      font-family: sans-serif;
-    }
-
-    #player {
-      position: absolute;
-      top: 100px;
-      left: 100px;
-      width: 60px;
-      height: 60px;
-      background: url('img/juf.png') no-repeat center center;
-      background-size: cover;
-      border-radius: 50%;
-    }
-
-    .mood-control {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 99;
-      display: flex;
-      gap: 8px;
-    }
-
-    .mood-control button {
-      padding: 8px 14px;
-      border: none;
-      background: #fff;
-      border-radius: 12px;
-      font-size: 14px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      cursor: pointer;
-    }
-
-    .mood-control button:hover {
-      background: #e0e0e0;
-    }
-  </style>
 </head>
 <body>
 
-  <!-- Karakter Juf -->
-  <div id="player"></div>
+  <!-- Background -->
+  <div id="background"></div>
 
-  <!-- Mood Buttons -->
-  <div class="mood-control">
-    <button onclick="updateMood('1')">Pelan</button>
-    <button onclick="updateMood('2')">Takut</button>
-    <button onclick="updateMood('3')">Lari</button>
-    <button onclick="updateMood('4')">Terbirit</button>
+  <!-- Tangan karakter utama -->
+  <img id="hands" src="img/lengan_juf.png" alt="Tangan Juf">
+
+  <!-- Kontrol gaya gerak -->
+  <div id="mood-controls">
+    <button onclick="setMood('pelan')">Pelan</button>
+    <button onclick="setMood('takut')">Takut</button>
+    <button onclick="setMood('lari')">Lari</button>
+    <button onclick="setMood('terbirit')">Terbirit</button>
   </div>
 
-  <!-- Panggil Script -->
+  <!-- Kontrol analog (arah) -->
+  <div id="joystick">
+    <button onclick="move('up')">⬆️</button><br>
+    <button onclick="move('left')">⬅️</button>
+    <button onclick="move('down')">⬇️</button>
+    <button onclick="move('right')">➡️</button>
+  </div>
+
+  <!-- Skrip gerak dan interaksi -->
   <script src="script.js"></script>
 </body>
 </html>
