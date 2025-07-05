@@ -15,3 +15,11 @@ body {
   color: white;
   z-index: 100;
 }
+#joystick-zone {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 120px;
+  height: 120px;
+  z-index: 10;
+}
