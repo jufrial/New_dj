@@ -15,9 +15,26 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
+// Buat overlay teks debug
+const debugDiv = document.createElement('div');
+debugDiv.style.position = 'absolute';
+debugDiv.style.bottom = '10px';
+debugDiv.style.left = '10px';
+debugDiv.style.padding = '10px';
+debugDiv.style.backgroundColor = 'rgba(0,0,0,0.6)';
+debugDiv.style.color = 'white';
+debugDiv.style.fontSize = '12px';
+debugDiv.style.zIndex = '9999';
+debugDiv.innerText = "🔍 Debug aktif...\n";
+document.body.appendChild(debugDiv);
+
+function log(msg) {
+  console.log(msg);
+  debugDiv.innerText += msg + "\n";
+}
+
 // Lighting
-const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.5);
-scene.add(hemiLight);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.5));
 const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
 dirLight.position.set(5, 10, 7.5);
 scene.add(dirLight);
@@ -27,16 +44,18 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1.4, 0);
 controls.update();
 
-// Load GLB model
+// Load karakter
+log("🚀 Memuat model: /model/karakter.glb");
 const loader = new GLTFLoader();
 loader.load('/model/karakter.glb', (gltf) => {
   const model = gltf.scene || gltf.scenes[0];
   model.scale.set(1.5, 1.5, 1.5);
   model.position.set(0, 0, 0);
   scene.add(model);
-  console.log("Model loaded successfully:", model);
-}, undefined, (error) => {
-  console.error("Error loading GLB model:", error);
+  log("✅ Karakter berhasil dimuat.");
+}, undefined, (err) => {
+  log("❌ Gagal memuat karakter:");
+  log(err.message || err);
 });
 
 function animate() {
@@ -44,9 +63,3 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
-
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
