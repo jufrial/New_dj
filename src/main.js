@@ -15,7 +15,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
-// Buat overlay teks debug
+// Debug overlay
 const debugDiv = document.createElement('div');
 debugDiv.style.position = 'absolute';
 debugDiv.style.bottom = '10px';
@@ -27,7 +27,6 @@ debugDiv.style.fontSize = '12px';
 debugDiv.style.zIndex = '9999';
 debugDiv.innerText = "🔍 Debug aktif...\n";
 document.body.appendChild(debugDiv);
-
 function log(msg) {
   console.log(msg);
   debugDiv.innerText += msg + "\n";
