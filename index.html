@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dunia Juf - Beta</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <audio id="bgm" src="sound/bgm.mp3" autoplay loop></audio>
+  <div id="game-container">
+    <div id="character" class="character" style="top: 50%; left: 50%;"></div>
+    <div id="npc-shira" class="npc" style="top: 60%; left: 70%;" onclick="interactWithShira()"></div>
+    <div id="dialog-box" class="dialog hidden">
+      <p id="dialog-text">...</p>
+      <button onclick="nextDialog()">Lanjut</button>
+    </div>
+  </div>
+  <div id="controls">
+    <button onclick="move('up')">⬆️</button>
+    <div>
+      <button onclick="move('left')">⬅️</button>
+      <button onclick="move('down')">⬇️</button>
+      <button onclick="move('right')">➡️</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
