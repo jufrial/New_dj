@@ -1,1 +1,15 @@
-
+{
+  "Shira": {
+    "nama": "Shira",
+    "lokasi": "taman",
+    "sifat": ["tenang", "ramah"],
+    "hubungan": {
+      "Juf": "teman dekat"
+    }
+  },
+  "taman": {
+    "jenis": "tempat",
+    "kesan": "damai",
+    "penghuni": ["Shira"]
+  }
+}
