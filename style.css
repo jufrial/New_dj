@@ -1,0 +1,19 @@
+body {
+  font-family: sans-serif;
+  background: linear-gradient(to top, #ffe, #ccf);
+  padding: 20px;
+}
+#chatbox {
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+#npc-output {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #eef;
+  border-radius: 5px;
+}
