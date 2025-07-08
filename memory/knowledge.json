@@ -1,15 +1,15 @@
 {
   "Shira": {
     "nama": "Shira",
-    "lokasi": "taman",
-    "sifat": ["tenang", "ramah"],
+    "lokasi": "taman tengah",
     "hubungan": {
-      "Juf": "teman dekat"
-    }
+      "Juf": "teman dekat yang mulai spesial"
+    },
+    "emosi_terhadap_Juf": "penasaran dan nyaman"
   },
-  "taman": {
-    "jenis": "tempat",
-    "kesan": "damai",
-    "penghuni": ["Shira"]
+  "taman tengah": {
+    "jenis": "tempat umum",
+    "suasana": "tenang dan sedikit angin sore",
+    "aktivitas": ["berjalan", "berbicara", "berdiam"]
   }
 }
