@@ -1,26 +1,16 @@
-// File: main.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 import { createHumanModel } from './human_model.js';
 import { movement } from './movement.js';
 
-// === SCENE ===
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xaaccff);
 
-// === CAMERA ===
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-// === RENDERER ===
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// === LIGHTING ===
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 scene.add(ambientLight);
 
@@ -28,7 +18,6 @@ const dirLight = new THREE.DirectionalLight(0xffffff, 1);
 dirLight.position.set(5, 10, 5);
 scene.add(dirLight);
 
-// === FLOOR ===
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
   new THREE.MeshStandardMaterial({ color: 0x888888 })
@@ -37,25 +26,21 @@ floor.rotation.x = -Math.PI / 2;
 floor.position.y = 0;
 scene.add(floor);
 
-// === PLAYER ===
 let player = createHumanModel();
 scene.add(player);
 camera.position.set(0, 1.6, 0);
 player.add(camera);
 
-// Ambil lengan untuk animasi
 const leftArm = player.getObjectByName('leftArm');
 const rightArm = player.getObjectByName('rightArm');
 let armSwing = 0;
 
-// === NPC ===
 let npc = createHumanModel();
 npc.position.set(2, 0, -2);
 scene.add(npc);
 
 let npcDirection = 1;
 
-// === ANIMASI ===
 function animate() {
   requestAnimationFrame(animate);
 
@@ -86,7 +71,6 @@ function animate() {
 }
 animate();
 
-// === RESPONSIVE ===
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
