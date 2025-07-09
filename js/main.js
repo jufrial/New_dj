@@ -1,47 +1,56 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
-import { createDualArms } from './hand_model.js';
-import { setupAnalogControl } from './hand_control.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js';
+import { createHumanModel } from './js/human_model.js';
 
+// === SCENE ===
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xcccccc);
+scene.background = new THREE.Color(0xdddddd);
 
-// 👇 [NON-VR CAMERA] sementara untuk melihat bentuk lengan & jari
+// === CAMERA ===
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 1.2, 2.5);  // Mundur & turun sedikit agar tangan terlihat jelas
-camera.lookAt(0, 1.2, 0);         // Fokus ke depan
-// ✅ CATATAN: Kembalikan ke mode VR nanti: camera.position.set(0, 1.6, 0);
+camera.position.set(0, 1.5, 3);
 
-
-const renderer = new THREE.WebGLRenderer();
+// === RENDERER ===
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(0, 5, 5);
-scene.add(light);
+// === CONTROLS (for testing) ===
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 1, 0);
+controls.update();
 
-const dualArms = createDualArms();
-dualArms.position.set(0, 1.3, -0.5);
-scene.add(dualArms);
+// === LIGHTING ===
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambientLight);
 
-setupAnalogControl(dualArms);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(5, 10, 7.5);
+scene.add(directionalLight);
 
+// === ADD HUMAN MODEL ===
+const human = createHumanModel();
+scene.add(human);
+
+// === FLOOR ===
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(10, 10),
+  new THREE.MeshStandardMaterial({ color: 0x999999, roughness: 0.8 })
+);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = 0;
+scene.add(floor);
+
+// === RENDER LOOP ===
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
 }
 animate();
 
+// === RESPONSIVE ===
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-document.body.addEventListener("click", () => {
-  document.documentElement.requestFullscreen().then(() => {
-    if (screen.orientation && screen.orientation.lock) {
-      screen.orientation.lock("landscape").catch(() => {});
-    }
-  });
 });
