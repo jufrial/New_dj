@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #282c34;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.logo {
+    margin-bottom: 50px;
+}
+
+#logo-img {
+    width: 200px;  /* Ukuran logo, sesuaikan sesuai gambar */
+    margin-bottom: 20px;
+}
+
+.logo h1 {
+    font-size: 3em;
+    margin-bottom: 50px;
+}
+
+.start-button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.start-button:hover {
+    background-color: #21a1f1;
+}
