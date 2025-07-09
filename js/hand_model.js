@@ -40,23 +40,24 @@ function createHandWithFingers(isLeft = false) {
   wrist.position.set(0, -0.025, 0);
   hand.add(wrist);
 
+  // Data posisi tiap jari
   const fingerData = [
-    { rot: 0.3, x: 0.04, y: 0.03, isThumb: true },
-    { rot: 0, x: 0.06, y: 0.05 },
-    { rot: 0, x: 0.0, y: 0.06 },
-    { rot: 0, x: -0.05, y: 0.05 },
-    { rot: -0.2, x: -0.08, y: 0.04 }
+    { x: 0.055, z: 0.025, rotY: 0.4, isThumb: true },   // Jempol
+    { x: 0.035, z: 0.05, rotY: 0.1 },                   // Telunjuk
+    { x: 0.0,   z: 0.055, rotY: 0.0 },                  // Tengah
+    { x: -0.035, z: 0.05, rotY: -0.1 },                 // Manis
+    { x: -0.055, z: 0.025, rotY: -0.2 }                 // Kelingking
   ];
 
   for (let i = 0; i < fingerData.length; i++) {
     const d = fingerData[i];
     const finger = createFinger(
       d.isThumb ? [0.055, 0.04] : [0.06, 0.045, 0.035],
-      d.rot,
+      d.rotY,
       0,
       d.isThumb
     );
-    finger.position.set(d.x, 0.09, d.y);
+    finger.position.set(d.x, 0.09, d.z);
     hand.add(finger);
   }
 
@@ -72,17 +73,16 @@ function createHandWithFingers(isLeft = false) {
 
 function createArm(isLeft = false) {
   const group = new THREE.Group();
+  const skin = new THREE.MeshStandardMaterial({ color: 0xffcc99 });
 
-  // Upper arm: agak besar, menyempit
   const upper = new THREE.Mesh(
     new THREE.CylinderGeometry(0.11, 0.09, 0.35, 14),
-    new THREE.MeshStandardMaterial({ color: 0xffcc99 })
+    skin
   );
   upper.rotation.z = Math.PI / 2;
   upper.position.set(0, 0, 0);
   group.add(upper);
 
-  // Siku: bentuk bulat alami, bukan bola penuh
   const elbow = new THREE.Mesh(
     new THREE.SphereGeometry(0.085, 14, 14, 0, Math.PI * 2, 0, Math.PI / 1.5),
     new THREE.MeshStandardMaterial({ color: 0xffbb88 })
@@ -91,16 +91,14 @@ function createArm(isLeft = false) {
   elbow.position.set(0.19, 0, 0);
   group.add(elbow);
 
-  // Forearm: lebih ramping, menyempit ke pergelangan
   const forearm = new THREE.Mesh(
     new THREE.CylinderGeometry(0.085, 0.065, 0.35, 14),
-    new THREE.MeshStandardMaterial({ color: 0xffcc99 })
+    skin
   );
   forearm.rotation.z = Math.PI / 2;
   forearm.position.set(0.36, 0, 0);
   group.add(forearm);
 
-  // Hand
   const hand = createHandWithFingers(isLeft);
   hand.position.set(0.52, 0, 0);
   group.add(hand);
