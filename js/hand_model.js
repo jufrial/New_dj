@@ -24,18 +24,14 @@ function createFinger(lengths = [0.06, 0.05, 0.04], rotation = 0, offsetY = 0.03
 function createHandWithFingers(isLeft = false) {
   const hand = new THREE.Group();
 
-  const palmColor = 0xffcc99;
-
-  // Telapak tangan dibulatkan: cylinder pendek
   const palm = new THREE.Mesh(
     new THREE.CylinderGeometry(0.08, 0.08, 0.12, 16),
-    new THREE.MeshStandardMaterial({ color: palmColor })
+    new THREE.MeshStandardMaterial({ color: 0xffcc99 })
   );
   palm.rotation.x = Math.PI / 2;
   palm.position.set(0, 0.03, 0);
   hand.add(palm);
 
-  // Pergelangan (penghubung dengan lengan)
   const wrist = new THREE.Mesh(
     new THREE.CylinderGeometry(0.065, 0.075, 0.08, 12),
     new THREE.MeshStandardMaterial({ color: 0xffcc99 })
@@ -44,7 +40,6 @@ function createHandWithFingers(isLeft = false) {
   wrist.position.set(0, -0.025, 0);
   hand.add(wrist);
 
-  // Posisi jari
   const fingerData = [
     { rot: 0.3, x: 0.04, y: 0.03, isThumb: true },
     { rot: 0, x: 0.06, y: 0.05 },
@@ -77,33 +72,37 @@ function createHandWithFingers(isLeft = false) {
 
 function createArm(isLeft = false) {
   const group = new THREE.Group();
-  const skin = new THREE.MeshStandardMaterial({ color: 0xffcc99 });
 
+  // Upper arm: agak besar, menyempit
   const upper = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.09, 0.1, 0.35, 12),
-    skin
+    new THREE.CylinderGeometry(0.11, 0.09, 0.35, 14),
+    new THREE.MeshStandardMaterial({ color: 0xffcc99 })
   );
   upper.rotation.z = Math.PI / 2;
   upper.position.set(0, 0, 0);
   group.add(upper);
 
+  // Siku: bentuk bulat alami, bukan bola penuh
   const elbow = new THREE.Mesh(
-    new THREE.SphereGeometry(0.09, 12, 12),
-    skin
+    new THREE.SphereGeometry(0.085, 14, 14, 0, Math.PI * 2, 0, Math.PI / 1.5),
+    new THREE.MeshStandardMaterial({ color: 0xffbb88 })
   );
-  elbow.position.set(0.18, 0, 0);
+  elbow.rotation.z = Math.PI / 2;
+  elbow.position.set(0.19, 0, 0);
   group.add(elbow);
 
+  // Forearm: lebih ramping, menyempit ke pergelangan
   const forearm = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.07, 0.08, 0.35, 12),
-    skin
+    new THREE.CylinderGeometry(0.085, 0.065, 0.35, 14),
+    new THREE.MeshStandardMaterial({ color: 0xffcc99 })
   );
   forearm.rotation.z = Math.PI / 2;
   forearm.position.set(0.36, 0, 0);
   group.add(forearm);
 
+  // Hand
   const hand = createHandWithFingers(isLeft);
-  hand.position.set(0.5, 0, 0);
+  hand.position.set(0.52, 0, 0);
   group.add(hand);
 
   if (isLeft) {
