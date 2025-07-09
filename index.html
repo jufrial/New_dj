@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dunia Juf - 3D Hand</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/main.js"></script>
+    <title>Dunia Juf</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Welcome to Dunia Juf</h1>
-    <script src="js/hand_control.js"></script>
+    <div class="intro">
+        <div class="logo">
+            <img src="assets/logo.png" alt="Dunia Juf Logo" id="logo-img">
+            <h1>Welcome to Dunia Juf</h1>
+        </div>
+        <button id="startButton" class="start-button">Start Game</button>
+    </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            window.location.href = 'game.html'; // Ganti ke halaman utama game
+        });
+    </script>
 </body>
 </html>
