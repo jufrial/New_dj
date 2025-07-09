@@ -1,4 +1,4 @@
-// File: js/arm.js
+// js/arm.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 import { createHand } from './hand_model.js';
 
@@ -19,23 +19,22 @@ export function createArm(side = 'left') {
   );
   lowerArm.position.y = -0.25;
 
-  // Elbow (sambungan)
+  // Sendi siku
   const elbow = new THREE.Object3D();
   elbow.position.y = -0.4;
   elbow.add(lowerArm);
 
-  // Tangan (hand)
+  // Tangan
   const hand = createHand();
   hand.position.y = -0.25;
   elbow.add(hand);
 
-  // Gabung semua ke grup utama arm
+  // Gabungkan semua ke grup
   arm.add(upperArm);
   arm.add(elbow);
 
-  // Jika sisi kanan, balik skalanya agar simetris
   if (side === 'right') {
-    arm.scale.x *= -1;
+    arm.scale.x *= -1; // cerminkan sisi kanan
   }
 
   return arm;
