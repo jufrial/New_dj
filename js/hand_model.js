@@ -2,18 +2,13 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.m
 
 function createFinger(lengths = [0.06, 0.05, 0.04], rotation = 0, offsetY = 0.03, isThumb = false) {
   const finger = new THREE.Group();
-
-  const colorRuas = [
-    0xffd1a1, // dasar jari (coklat muda)
-    0xffc19e, // tengah
-    0xffb08b  // ujung (lebih kemerahan)
-  ];
+  const skinColors = [0xffd1a1, 0xffc19e, 0xffb08b];
 
   let x = 0;
   for (let i = 0; i < lengths.length; i++) {
     const segment = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.012 - i * 0.002, 0.014 - i * 0.002, lengths[i], 8),
-      new THREE.MeshStandardMaterial({ color: colorRuas[i] || 0xffb08b })
+      new THREE.CylinderGeometry(0.012 - i * 0.002, 0.014 - i * 0.002, lengths[i], 12),
+      new THREE.MeshStandardMaterial({ color: skinColors[i] || skinColors[2] })
     );
     segment.rotation.z = Math.PI / 2;
     segment.position.set(x + lengths[i] / 2, offsetY, 0);
@@ -23,38 +18,50 @@ function createFinger(lengths = [0.06, 0.05, 0.04], rotation = 0, offsetY = 0.03
 
   finger.rotation.y = rotation;
   if (isThumb) finger.rotation.z = -0.4;
-
   return finger;
 }
 
 function createHandWithFingers(isLeft = false) {
   const hand = new THREE.Group();
+
   const palmColor = 0xffcc99;
+
+  // Telapak tangan dibulatkan: cylinder pendek
   const palm = new THREE.Mesh(
-    new THREE.BoxGeometry(0.15, 0.1, 0.2),
+    new THREE.CylinderGeometry(0.08, 0.08, 0.12, 16),
     new THREE.MeshStandardMaterial({ color: palmColor })
   );
-  palm.position.set(0, 0, 0);
+  palm.rotation.x = Math.PI / 2;
+  palm.position.set(0, 0.03, 0);
   hand.add(palm);
 
-  // Posisi & rotasi jari
+  // Pergelangan (penghubung dengan lengan)
+  const wrist = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.065, 0.075, 0.08, 12),
+    new THREE.MeshStandardMaterial({ color: 0xffcc99 })
+  );
+  wrist.rotation.x = Math.PI / 2;
+  wrist.position.set(0, -0.025, 0);
+  hand.add(wrist);
+
+  // Posisi jari
   const fingerData = [
-    { rot: 0.3, x: 0.04, y: 0.03, isThumb: true },  // Thumb
-    { rot: 0, x: 0.06, y: 0.05 },   // Index
-    { rot: 0, x: 0.0, y: 0.06 },    // Middle
-    { rot: 0, x: -0.05, y: 0.05 },  // Ring
-    { rot: -0.2, x: -0.08, y: 0.04 } // Pinky
+    { rot: 0.3, x: 0.04, y: 0.03, isThumb: true },
+    { rot: 0, x: 0.06, y: 0.05 },
+    { rot: 0, x: 0.0, y: 0.06 },
+    { rot: 0, x: -0.05, y: 0.05 },
+    { rot: -0.2, x: -0.08, y: 0.04 }
   ];
 
   for (let i = 0; i < fingerData.length; i++) {
     const d = fingerData[i];
     const finger = createFinger(
-      d.isThumb ? [0.06, 0.045] : [0.06, 0.045, 0.035],
+      d.isThumb ? [0.055, 0.04] : [0.06, 0.045, 0.035],
       d.rot,
       0,
       d.isThumb
     );
-    finger.position.set(d.x, 0.05, d.y);
+    finger.position.set(d.x, 0.09, d.y);
     hand.add(finger);
   }
 
