@@ -1,4 +1,3 @@
-// File: human_model.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 import { createTorso } from './torso.js';
 import { createArm } from './arm.js';
@@ -10,12 +9,11 @@ export function createHumanModel() {
 
   const torso = createTorso();
   const head = createHead();
-  const leftArm = createArm("left");
-  const rightArm = createArm("right");
-  const leftLeg = createLeg("left");
-  const rightLeg = createLeg("right");
+  const leftArm = createArm('left');
+  const rightArm = createArm('right');
+  const leftLeg = createLeg('left');
+  const rightLeg = createLeg('right');
 
-  // Tambahkan nama untuk akses animasi nanti
   leftArm.name = 'leftArm';
   rightArm.name = 'rightArm';
 
