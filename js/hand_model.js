@@ -1,5 +1,26 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 
+function createFinger(lengths = [0.06, 0.05, 0.04], rotation = 0, offsetY = 0.03, isThumb = false) {
+  const finger = new THREE.Group();
+  const skinColors = [0xffd1a1, 0xffc19e, 0xffb08b];
+
+  let x = 0;
+  for (let i = 0; i < lengths.length; i++) {
+    const segment = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.012 - i * 0.002, 0.014 - i * 0.002, lengths[i], 12),
+      new THREE.MeshStandardMaterial({ color: skinColors[i] || skinColors[2] })
+    );
+    segment.rotation.z = Math.PI / 2;
+    segment.position.set(x + lengths[i] / 2, offsetY, 0);
+    finger.add(segment);
+    x += lengths[i];
+  }
+
+  finger.rotation.y = rotation;
+  if (isThumb) finger.rotation.z = -0.4;
+  return finger;
+}
+
 function createHandWithFingers(isLeft = false) {
   const hand = new THREE.Group();
 
@@ -21,10 +42,10 @@ function createHandWithFingers(isLeft = false) {
 
   const fingerPositions = [
     { x: 0.07, z: 0.0, rotY: 0.5, isThumb: true },    // Jempol
-    { x: 0.035, z: 0.05, rotY: 0.2 },                // Telunjuk
-    { x: 0.0, z: 0.055, rotY: 0.0 },                 // Tengah
-    { x: -0.035, z: 0.05, rotY: -0.2 },              // Manis
-    { x: -0.07, z: 0.03, rotY: -0.4 }                // Kelingking
+    { x: 0.035, z: 0.05, rotY: 0.2 },                 // Telunjuk
+    { x: 0.0, z: 0.055, rotY: 0.0 },                  // Tengah
+    { x: -0.035, z: 0.05, rotY: -0.2 },               // Manis
+    { x: -0.07, z: 0.03, rotY: -0.4 }                 // Kelingking
   ];
 
   for (const data of fingerPositions) {
@@ -46,8 +67,6 @@ function createHandWithFingers(isLeft = false) {
   }
 
   return hand;
-}
-
 }
 
 function createArm(isLeft = false) {
@@ -94,7 +113,7 @@ function createArm(isLeft = false) {
 
 export function createDualArms() {
   const arms = new THREE.Group();
-  arms.add(createArm(false)); // kanan
-  arms.add(createArm(true));  // kiri
+  arms.add(createArm(false)); // Tangan kanan
+  arms.add(createArm(true));  // Tangan kiri
   return arms;
 }
