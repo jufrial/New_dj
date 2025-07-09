@@ -5,35 +5,35 @@ import { createHand } from './hand_model.js';
 export function createArm(side = 'left') {
   const arm = new THREE.Group();
 
-  // Upper arm
+  // Lengan atas
   const upperArm = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.1, 0.1, 0.4, 12),
+    new THREE.CylinderGeometry(0.09, 0.09, 0.4, 12),
     new THREE.MeshStandardMaterial({ color: 0xffbb99 })
   );
   upperArm.position.y = -0.2;
 
-  // Lower arm
+  // Lengan bawah
   const lowerArm = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.08, 0.08, 0.4, 12),
+    new THREE.CylinderGeometry(0.07, 0.07, 0.4, 12),
     new THREE.MeshStandardMaterial({ color: 0xffaa88 })
   );
-  lowerArm.position.y = -0.5;
+  lowerArm.position.y = -0.25;
 
-  // Sambung tangan ke bawah lengan
-  const hand = createHand();
-  hand.position.y = -0.25;
-
-  // Gabung ke objek elbow
-  const elbow = new THREE.Group();
+  // Elbow (sambungan)
+  const elbow = new THREE.Object3D();
   elbow.position.y = -0.4;
   elbow.add(lowerArm);
+
+  // Tangan (hand)
+  const hand = createHand();
+  hand.position.y = -0.25;
   elbow.add(hand);
 
-  // Gabungkan ke lengan utama
+  // Gabung semua ke grup utama arm
   arm.add(upperArm);
   arm.add(elbow);
 
-  // Posisi dan orientasi untuk sisi kanan
+  // Jika sisi kanan, balik skalanya agar simetris
   if (side === 'right') {
     arm.scale.x *= -1;
   }
