@@ -1,6 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
-import { createHumanModel } from './js/human_model.js';
-import { movement } from './js/movement.js';
+import { createHumanModel } from './human_model.js';
+import { movement } from './movement.js';
 
 // === SCENE ===
 const scene = new THREE.Scene();
