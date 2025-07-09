@@ -1,4 +1,4 @@
-export function setupAnalogControl(handGroup) {
+export function setupAnalogControl(armsGroup) {
   const joystick = document.getElementById('joystick');
   let dragging = false;
   let startX, startY;
@@ -13,8 +13,8 @@ export function setupAnalogControl(handGroup) {
     if (!dragging) return;
     const dx = e.touches[0].clientX - startX;
     const dy = e.touches[0].clientY - startY;
-    handGroup.rotation.y = dx * 0.01;
-    handGroup.rotation.x = dy * 0.01;
+    armsGroup.rotation.y = dx * 0.005;
+    armsGroup.rotation.x = dy * 0.005;
   });
 
   joystick.addEventListener('touchend', () => {
