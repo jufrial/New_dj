@@ -1,26 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 
-function createFinger(lengths = [0.06, 0.05, 0.04], rotation = 0, offsetY = 0.03, isThumb = false) {
-  const finger = new THREE.Group();
-  const skinColors = [0xffd1a1, 0xffc19e, 0xffb08b];
-
-  let x = 0;
-  for (let i = 0; i < lengths.length; i++) {
-    const segment = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.012 - i * 0.002, 0.014 - i * 0.002, lengths[i], 12),
-      new THREE.MeshStandardMaterial({ color: skinColors[i] || skinColors[2] })
-    );
-    segment.rotation.z = Math.PI / 2;
-    segment.position.set(x + lengths[i] / 2, offsetY, 0);
-    finger.add(segment);
-    x += lengths[i];
-  }
-
-  finger.rotation.y = rotation;
-  if (isThumb) finger.rotation.z = -0.4;
-  return finger;
-}
-
 function createHandWithFingers(isLeft = false) {
   const hand = new THREE.Group();
 
@@ -40,24 +19,22 @@ function createHandWithFingers(isLeft = false) {
   wrist.position.set(0, -0.025, 0);
   hand.add(wrist);
 
-  // Data posisi tiap jari
-  const fingerData = [
-    { x: 0.055, z: 0.025, rotY: 0.4, isThumb: true },   // Jempol
-    { x: 0.035, z: 0.05, rotY: 0.1 },                   // Telunjuk
-    { x: 0.0,   z: 0.055, rotY: 0.0 },                  // Tengah
-    { x: -0.035, z: 0.05, rotY: -0.1 },                 // Manis
-    { x: -0.055, z: 0.025, rotY: -0.2 }                 // Kelingking
+  const fingerPositions = [
+    { x: 0.07, z: 0.0, rotY: 0.5, isThumb: true },    // Jempol
+    { x: 0.035, z: 0.05, rotY: 0.2 },                // Telunjuk
+    { x: 0.0, z: 0.055, rotY: 0.0 },                 // Tengah
+    { x: -0.035, z: 0.05, rotY: -0.2 },              // Manis
+    { x: -0.07, z: 0.03, rotY: -0.4 }                // Kelingking
   ];
 
-  for (let i = 0; i < fingerData.length; i++) {
-    const d = fingerData[i];
+  for (const data of fingerPositions) {
     const finger = createFinger(
-      d.isThumb ? [0.055, 0.04] : [0.06, 0.045, 0.035],
-      d.rotY,
+      data.isThumb ? [0.055, 0.04] : [0.06, 0.045, 0.035],
+      data.rotY,
       0,
-      d.isThumb
+      data.isThumb
     );
-    finger.position.set(d.x, 0.09, d.z);
+    finger.position.set(data.x, 0.09, data.z);
     hand.add(finger);
   }
 
@@ -69,6 +46,8 @@ function createHandWithFingers(isLeft = false) {
   }
 
   return hand;
+}
+
 }
 
 function createArm(isLeft = false) {
