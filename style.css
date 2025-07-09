@@ -1,0 +1,11 @@
+#joystick {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  touch-action: none;
+}
