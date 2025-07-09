@@ -1,13 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Dunia Juf</title>
-  <style>body { margin: 0; overflow: hidden; }</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #loadingScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(to bottom, #1e3c72, #2a5298);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      z-index: 1000;
+    }
+
+    #startButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ffffff;
+      color: #1e3c72;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #startButton:hover {
+      background-color: #e0e0e0;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.9.0/nipplejs.min.js"></script>
 </head>
 <body>
-  <script type="module" src="js/joystick.js"></script>
-  <script type="module" src="main.js"></script>
+
+  <div id="loadingScreen">
+    <h1>Selamat Datang di Dunia Juf</h1>
+    <button id="startButton">Mulai Permainan</button>
+  </div>
+
+  <script type="module">
+    import './js/joystick.js';
+    import './main.js';
+
+    const startButton = document.getElementById("startButton");
+    const loadingScreen = document.getElementById("loadingScreen");
+
+    startButton.addEventListener("click", () => {
+      loadingScreen.style.display = "none";
+    });
+  </script>
 </body>
 </html>
