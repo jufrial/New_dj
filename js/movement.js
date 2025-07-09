@@ -1,1 +1,4 @@
-// movement.js - code akan diisi nanti
+export const movement = {
+  x: 0,
+  y: 0
+};
