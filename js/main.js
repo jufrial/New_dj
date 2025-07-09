@@ -17,7 +17,7 @@ light.position.set(0, 5, 5);
 scene.add(light);
 
 const handGroup = createFullHandWithArm();
-handGroup.position.set(0.15, 1.3, -0.5);
+handGroup.position.set(0.1, 1.4, -0.4);
 scene.add(handGroup);
 
 setupAnalogControl(handGroup);
@@ -34,3 +34,23 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+function lockLandscape() {
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock("landscape").catch(() => {
+      console.warn("Gagal mengunci orientasi");
+    });
+  }
+}
+
+document.body.addEventListener("click", () => {
+  document.documentElement.requestFullscreen().then(() => {
+    lockLandscape();
+  });
+});
