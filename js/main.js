@@ -5,8 +5,12 @@ import { setupAnalogControl } from './hand_control.js';
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xcccccc);
 
+// 👇 [NON-VR CAMERA] sementara untuk melihat bentuk lengan & jari
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 1.6, 0);
+camera.position.set(0, 1.2, 2.5);  // Mundur & turun sedikit agar tangan terlihat jelas
+camera.lookAt(0, 1.2, 0);         // Fokus ke depan
+// ✅ CATATAN: Kembalikan ke mode VR nanti: camera.position.set(0, 1.6, 0);
+
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
