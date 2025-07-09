@@ -1,14 +1,33 @@
-
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
+import { createTorso } from './torso.js';
+import { createArm } from './arm.js';
+import { createLeg } from './leg.js';
+import { createHead } from './head.js';
 
 export function createHumanModel() {
-  const group = new THREE.Group();
+  const model = new THREE.Group();
 
-  const geometry = new THREE.CapsuleGeometry(0.3, 1.0, 4, 8);
-  const material = new THREE.MeshStandardMaterial({ color: 0xffcccc });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.y = 1;
+  const torso = createTorso();
+  const head = createHead();
+  const leftArm = createArm("left");
+  const rightArm = createArm("right");
+  const leftLeg = createLeg("left");
+  const rightLeg = createLeg("right");
 
-  group.add(mesh);
-  return group;
+  torso.add(head);
+  head.position.y = 0.9;
+
+  leftArm.position.set(-0.35, 0.5, 0);
+  rightArm.position.set(0.35, 0.5, 0);
+
+  leftLeg.position.set(-0.18, -0.9, 0);
+  rightLeg.position.set(0.18, -0.9, 0);
+
+  torso.add(leftArm);
+  torso.add(rightArm);
+  torso.add(leftLeg);
+  torso.add(rightLeg);
+
+  model.add(torso);
+  return model;
 }
