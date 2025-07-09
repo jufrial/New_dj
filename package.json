@@ -1,0 +1,12 @@
+{
+  "name": "DuniaJuf",
+  "version": "1.0.0",
+  "description": "First-Person VR Game",
+  "dependencies": {
+    "three": "^0.128.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "live-server"
+  }
+}
