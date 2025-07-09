@@ -1,11 +1,10 @@
 {
   "name": "DuniaJuf",
   "version": "1.0.0",
-  "description": "First-Person VR Game",
+  "description": "First-person simulation from player eyes, with animated human body parts",
   "dependencies": {
-    "three": "^0.128.0"
+    "three": "^0.150.1"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "live-server"
   }
