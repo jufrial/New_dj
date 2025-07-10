@@ -6,16 +6,15 @@ import { createHumanModel } from './human_model/human_model.js';
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222244);
 
+// KAMERA
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 2, 8);
+// Kamera agak tinggi dan mundur, menghadap ke tengah lantai
+camera.position.set(0, 5.5, 13);
+camera.lookAt(0, 1, 0);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('container').appendChild(renderer.domElement);
-
-// MODEL MANUSIA
-const human = createHumanModel();
-scene.add(human);
 
 // ==========================
 // LANTAI REALISTIK
@@ -42,11 +41,12 @@ const floorSize = 40;
 const floorGeo = new THREE.PlaneGeometry(floorSize, floorSize);
 const floor = new THREE.Mesh(floorGeo, floorMat);
 floor.rotation.x = -Math.PI / 2;
+floor.position.y = 0; // lantai di y=0
 floor.receiveShadow = true;
 scene.add(floor);
 
 const gridHelper = new THREE.GridHelper(floorSize, 16, 0xffffff, 0xcccccc);
-gridHelper.position.y = 0.02;
+gridHelper.position.y = 0.01;
 scene.add(gridHelper);
 
 const floorLight = new THREE.DirectionalLight(0xffffff, 0.4);
@@ -54,6 +54,13 @@ floorLight.position.set(0, 10, 0);
 scene.add(floorLight);
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+
+// ==========================
+// MODEL MANUSIA - posisi di atas lantai
+// ==========================
+const human = createHumanModel();
+human.position.set(0, 1, 0); // y=1 agar kaki pas di atas lantai
+scene.add(human);
 
 // ==========================
 // RUMAH REALISTIK SEDERHANA
@@ -92,7 +99,7 @@ const tembokKanan = new THREE.Mesh(
 tembokKanan.position.set(14, 1.25, 0);
 rumah.add(tembokKanan);
 
-// LANTAI RUMAH (opsional, beda warna)
+// LANTAI RUMAH
 const lantaiRumah = new THREE.Mesh(
   new THREE.BoxGeometry(4.05, 0.1, 4.05),
   new THREE.MeshStandardMaterial({ color: 0xcbb893 })
@@ -141,7 +148,6 @@ const jendelaKanan = new THREE.Mesh(
 jendelaKanan.position.set(13.1, 1.4, 2.15);
 rumah.add(jendelaKanan);
 
-// Tambahkan group rumah ke scene
 scene.add(rumah);
 
 // ==========================
