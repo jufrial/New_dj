@@ -1,4 +1,3 @@
-// File: js/human_model/human_model.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 import { createTorso } from './torso.js';
 import { createArm } from './arm.js';
@@ -8,30 +7,32 @@ import { createHead } from './head.js';
 export function createHumanModel() {
   const model = new THREE.Group();
 
+  // Torso
   const torso = createTorso();
+  model.add(torso);
+
+  // Head
   const head = createHead();
-  const leftArm = createArm('left');
-  const rightArm = createArm('right');
-  const leftLeg = createLeg('left');
-  const rightLeg = createLeg('right');
-
-  leftArm.name = 'leftArm';
-  rightArm.name = 'rightArm';
-
+  head.position.y = 0.9 + 0.25 + 0.05; // di atas torso
   torso.add(head);
-  head.position.y = 0.9;
 
+  // Arms
+  const leftArm = createArm('left');
   leftArm.position.set(-0.35, 0.5, 0);
-  rightArm.position.set(0.35, 0.5, 0);
-
-  leftLeg.position.set(-0.18, -0.9, 0);
-  rightLeg.position.set(0.18, -0.9, 0);
-
   torso.add(leftArm);
+
+  const rightArm = createArm('right');
+  rightArm.position.set(0.35, 0.5, 0);
   torso.add(rightArm);
+
+  // Legs
+  const leftLeg = createLeg('left');
+  leftLeg.position.set(-0.15, -0.9, 0);
   torso.add(leftLeg);
+
+  const rightLeg = createLeg('right');
+  rightLeg.position.set(0.15, -0.9, 0);
   torso.add(rightLeg);
 
-  model.add(torso);
   return model;
 }
