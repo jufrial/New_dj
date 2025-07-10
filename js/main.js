@@ -41,11 +41,10 @@ const atap = new THREE.Mesh(
   new THREE.MeshStandardMaterial({ color: 0x884422 })
 );
 atap.position.set(7, 2.6, 0);
-atap.rotation.y = Math.PI / 4; // biar sudut atap sejajar dinding
+atap.rotation.y = Math.PI / 4;
 rumah.add(atap);
 
 scene.add(rumah);
-
 // LAMPU
 scene.add(new THREE.AmbientLight(0xffffff, 0.7));
 const dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
