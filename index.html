@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Game Demo Joystick</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Three.js module -->
-  <script type="module" src="./js/main.js"></script>
-  <!-- NippleJS untuk joystick -->
-  <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.9.0/dist/nipplejs.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Dunia Juf - Game</title>
+  <link rel="stylesheet" href="css/style.css" />
   <style>
-    body { margin: 0; overflow: hidden; background: #222; }
-    #joystick-zone { position: fixed; left: 20px; bottom: 20px; width: 120px; height: 120px; z-index: 99; }
-    #container { width: 100vw; height: 100vh; }
+    body { margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .menu { text-align: center; }
+    .start-btn {
+      padding: 1em 2em;
+      font-size: 1.2em;
+      background: #337ab7;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .start-btn:hover {
+      background: #23527c;
+    }
   </style>
 </head>
 <body>
-  <div id="container"></div>
-  <div id="joystick-zone"></div>
+  <div class="menu">
+    <h1>Selamat Datang di Dunia Juf</h1>
+    <a href="game.html"><button class="start-btn">Mulai Permainan</button></a>
+  </div>
 </body>
 </html>
