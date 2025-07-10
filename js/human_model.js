@@ -5,7 +5,6 @@ import { createArm } from './arm.js';
 import { createLeg } from './leg.js';
 import { createTorso } from './torso.js';
 
-
 export function createHumanModel() {
   const model = new THREE.Group();
 
