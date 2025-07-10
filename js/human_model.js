@@ -1,9 +1,10 @@
 // js/human_model.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
-import { createTorso } from './torso.js';
+import { createHead } from './head.js';
 import { createArm } from './arm.js';
 import { createLeg } from './leg.js';
-import { createHead } from './head.js';
+import { createTorso } from './torso.js';
+
 
 export function createHumanModel() {
   const model = new THREE.Group();
