@@ -19,11 +19,8 @@ export function createLeg(side = "left") {
   knee.position.y = -0.6;
   knee.add(lowerLeg);
 
-  const legGroup = new THREE.Object3D();
-  legGroup.add(upperLeg);
-  legGroup.add(knee);
-
-  leg.add(legGroup);
+  leg.add(upperLeg);
+  leg.add(knee);
 
   if (side === "right") {
     leg.scale.x *= -1;
