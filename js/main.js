@@ -1,4 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js';
 import { setupMovementWithJoystick } from './movement.js';
 import { createHumanModel } from './human_model/human_model.js';
 
@@ -14,6 +15,15 @@ camera.lookAt(4, 1.2, 0);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('container').appendChild(renderer.domElement);
+
+// KONTROL KAMERA (OrbitControls)
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.screenSpacePanning = true;
+controls.minDistance = 8;
+controls.maxDistance = 30;
+controls.target.set(4, 1.2, 0);
 
 // ==========================
 // LANTAI REALISTIK
@@ -40,7 +50,7 @@ const floorSize = 50;
 const floorGeo = new THREE.PlaneGeometry(floorSize, floorSize);
 const floor = new THREE.Mesh(floorGeo, floorMat);
 floor.rotation.x = -Math.PI / 2;
-floor.position.y = 0; // lantai di y=0
+floor.position.y = 0;
 floor.receiveShadow = true;
 scene.add(floor);
 
@@ -160,7 +170,7 @@ dirLight.position.set(5, 10, 7);
 scene.add(dirLight);
 
 // ==========================
-// JOYSTICK
+// JOYSTICK & GERAKAN MANUSIA
 // ==========================
 const joystick = nipplejs.create({
   zone: document.getElementById('joystick-zone'),
@@ -175,6 +185,7 @@ setupMovementWithJoystick(human, joystick);
 // ==========================
 function animate() {
   requestAnimationFrame(animate);
+  controls.update();
   renderer.render(scene, camera);
 }
 animate();
