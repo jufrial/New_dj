@@ -1,6 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 import { setupMovementWithJoystick } from './movement.js';
-import { createArm } from './human_model/arm.js';
+import { createHumanModel } from './human_model/human_model.js';
 
 // Basic Three.js scene setup
 const scene = new THREE.Scene();
@@ -13,51 +13,8 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('container').appendChild(renderer.domElement);
 
-// MODEL MANUSIA SEDERHANA
-const human = new THREE.Group();
-
-// BADAN
-const body = new THREE.Mesh(
-  new THREE.CylinderGeometry(0.4, 0.4, 1.2, 16),
-  new THREE.MeshStandardMaterial({ color: 0x00ff99 })
-);
-body.position.y = 1.1;
-human.add(body);
-
-// KEPALA
-const head = new THREE.Mesh(
-  new THREE.SphereGeometry(0.30, 16, 16),
-  new THREE.MeshStandardMaterial({ color: 0xffeeaa })
-);
-head.position.y = 1.9;
-human.add(head);
-
-// TANGAN KIRI & KANAN
-const leftArm = createArm("left");
-leftArm.position.set(-0.45, 1.6, 0);
-human.add(leftArm);
-
-const rightArm = createArm("right");
-rightArm.position.set(0.45, 1.6, 0);
-human.add(rightArm);
-
-// KAKI KIRI
-const leftLeg = new THREE.Mesh(
-  new THREE.CylinderGeometry(0.13, 0.13, 0.7, 8),
-  new THREE.MeshStandardMaterial({ color: 0x00ff99 })
-);
-leftLeg.position.set(-0.18, 0.35, 0);
-human.add(leftLeg);
-
-// KAKI KANAN
-const rightLeg = new THREE.Mesh(
-  new THREE.CylinderGeometry(0.13, 0.13, 0.7, 8),
-  new THREE.MeshStandardMaterial({ color: 0x00ff99 })
-);
-rightLeg.position.set(0.18, 0.35, 0);
-human.add(rightLeg);
-
-human.position.y = 0; // berdiri di atas lantai
+// MODEL MANUSIA DARI BUILDER
+const human = createHumanModel();
 scene.add(human);
 
 // LANTAI (tempat pijakan karakter)
