@@ -1,25 +1,12 @@
-export const movement = { x: 0, y: 0 };
-
-const joystick = document.getElementById("joystick");
-
-let startX, startY;
-
-joystick.addEventListener("touchstart", (e) => {
-  const touch = e.touches[0];
-  startX = touch.clientX;
-  startY = touch.clientY;
-});
-
-joystick.addEventListener("touchmove", (e) => {
-  const touch = e.touches[0];
-  const deltaX = touch.clientX - startX;
-  const deltaY = touch.clientY - startY;
-
-  movement.x = deltaX / 50;
-  movement.y = deltaY / 50;
-});
-
-joystick.addEventListener("touchend", () => {
-  movement.x = 0;
-  movement.y = 0;
-});
+// File: js/joystick.js
+// Dummy joystick virtual, bisa diganti dengan UI sebenarnya
+export function setupJoystick(human) {
+  // Contoh: setiap detik, goyangkan badan kiri-kanan
+  let t = 0;
+  function wiggle() {
+    t += 0.05;
+    human.rotation.z = Math.sin(t) * 0.1;
+    requestAnimationFrame(wiggle);
+  }
+  wiggle();
+}
