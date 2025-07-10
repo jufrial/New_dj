@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
-  <title>Dunia Juf - Game</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="utf-8">
+  <title>Game 3D</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; overflow: hidden; }
+    #container { width: 100vw; height: 100vh; position: fixed; left: 0; top: 0; }
+    #joystick-zone { position: fixed; left: 10px; bottom: 10px; width: 120px; height: 120px; z-index: 10; }
+  </style>
 </head>
 <body>
-  <div id="joystick"></div>
+  <div id="container"></div>
+  <div id="joystick-zone"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.9.0/nipplejs.min.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
