@@ -1,3 +1,4 @@
+// js/human_model.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 import { createTorso } from './torso.js';
 import { createArm } from './arm.js';
