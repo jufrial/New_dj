@@ -1,18 +1,30 @@
-// ... kode sebelumnya (scene, camera, renderer, dsb) ...
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
+import { setupMovementWithJoystick } from './movement.js';
+import { createHumanModel } from './human_model/human_model.js';
 
-// Tambahkan model manusia
+// SCENE SETUP
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x222244);
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 2, 6);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('container').appendChild(renderer.domElement);
+
+// MODEL MANUSIA
 const human = createHumanModel();
 scene.add(human);
 
 // ==========================
-// LANTAI REALISTIK MULAI DI SINI
+// LANTAI REALISTIK
 // ==========================
 const textureLoader = new THREE.TextureLoader();
 
-// Gunakan tekstur grid default Three.js (bisa diganti tekstur sendiri)
 const floorTexture = textureLoader.load('https://threejs.org/examples/textures/uv_grid_opengl.jpg');
 floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-floorTexture.repeat.set(8, 8); // 8x8 ubin besar
+floorTexture.repeat.set(8, 8);
 
 const floorNormalMap = textureLoader.load('https://threejs.org/examples/textures/water/Water_1_M_Normal.jpg');
 floorNormalMap.wrapS = floorNormalMap.wrapT = THREE.RepeatWrapping;
@@ -21,8 +33,8 @@ floorNormalMap.repeat.set(8, 8);
 const floorMat = new THREE.MeshStandardMaterial({
   map: floorTexture,
   normalMap: floorNormalMap,
-  roughness: 0.33,     // agak mengkilap
-  metalness: 0.14,     // sedikit refleksi
+  roughness: 0.33,
+  metalness: 0.14,
   color: 0xffffff,
 });
 
@@ -47,13 +59,10 @@ scene.add(floorLight);
 scene.add(new THREE.AmbientLight(0xffffff, 0.35));
 
 // ==========================
-// LANTAI SELESAI, lanjut rumah seperti biasa
-// ==========================
-
 // RUMAH SEDERHANA
+// ==========================
 const rumah = new THREE.Group();
 
-// Tembok rumah (kotak)
 const dinding = new THREE.Mesh(
   new THREE.BoxGeometry(3, 2, 3),
   new THREE.MeshStandardMaterial({ color: 0xd2b48c })
@@ -61,7 +70,6 @@ const dinding = new THREE.Mesh(
 dinding.position.set(7, 1, 0);
 rumah.add(dinding);
 
-// Atap rumah (kerucut)
 const atap = new THREE.Mesh(
   new THREE.ConeGeometry(2.1, 1.2, 4),
   new THREE.MeshStandardMaterial({ color: 0x884422 })
@@ -72,4 +80,36 @@ rumah.add(atap);
 
 scene.add(rumah);
 
-// ...lanjut kode joystick, render loop, dsb...
+// ==========================
+// LAMPU UTAMA
+// ==========================
+scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
+dirLight.position.set(5, 10, 7);
+scene.add(dirLight);
+
+// ==========================
+// JOYSTICK
+// ==========================
+const joystick = nipplejs.create({
+  zone: document.getElementById('joystick-zone'),
+  mode: 'static',
+  position: { left: '50%', top: '50%' },
+  color: 'blue'
+});
+setupMovementWithJoystick(human, joystick);
+
+// ==========================
+// RENDER LOOP
+// ==========================
+function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
