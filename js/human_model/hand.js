@@ -10,7 +10,7 @@ export function createHand() {
   );
   group.add(palm);
 
-  // Jari-jari (sederhana)
+  // Jari-jari sederhana (4 jari)
   for (let i = 0; i < 4; i++) {
     const finger = new THREE.Mesh(
       new THREE.CylinderGeometry(0.018, 0.018, 0.13, 8),
@@ -20,7 +20,7 @@ export function createHand() {
     finger.rotation.x = Math.PI / 2.2;
     group.add(finger);
   }
-  // Thumb
+  // Ibu jari
   const thumb = new THREE.Mesh(
     new THREE.CylinderGeometry(0.02, 0.02, 0.11, 8),
     new THREE.MeshStandardMaterial({ color: 0xeaeaea })
