@@ -1,5 +1,8 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 import { createHumanModel } from './human_model/human_model.js';
+import { setupMovement } from './movement.js';
+import { setupJoystick } from './joystick.js';
+import { setupHandControl } from './hand_control.js';
 
 // Setup scene
 const scene = new THREE.Scene();
@@ -27,6 +30,11 @@ scene.add(directionalLight);
 // Tambahkan model manusia ke scene
 const human = createHumanModel();
 scene.add(human);
+
+// Integrasi kontrol movement, joystick, dan hand
+setupMovement(human, camera);
+setupJoystick(human);
+setupHandControl(human);
 
 // Animation loop
 function animate() {
