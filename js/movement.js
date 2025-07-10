@@ -44,4 +44,4 @@ export function setupMovement(human, camera) {
     requestAnimationFrame(update);
   }
   update();
-      }
+}
