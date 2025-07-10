@@ -1,4 +1,3 @@
-// js/hand_model.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 
 export function createHand() {
@@ -12,8 +11,8 @@ export function createHand() {
   palm.position.set(0, 0, 0);
   hand.add(palm);
 
-  // Jari-jari
-  const fingerGeometry = new THREE.CylinderGeometry(0.015, 0.015, 0.08, 8);
+  // Jari-jari utama (4 jari)
+  const fingerGeometry = new THREE.CylinderGeometry(0.012, 0.012, 0.08, 8);
   const fingerMaterial = new THREE.MeshStandardMaterial({ color: 0xffcccc });
 
   for (let i = 0; i < 4; i++) {
@@ -23,7 +22,7 @@ export function createHand() {
     hand.add(finger);
   }
 
-  // Jempol
+  // Ibu jari (lebih kecil dan miring)
   const thumb = new THREE.Mesh(fingerGeometry, fingerMaterial);
   thumb.rotation.x = Math.PI / 4;
   thumb.position.set(-0.07, -0.02, 0.05);
