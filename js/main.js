@@ -1,5 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
-import { createHumanModel } from './human_model.js';
+import { createHumanModel } from './human_model/human_model.js';
 import { movement } from './movement.js';
 
 // === SCENE ===
