@@ -1,5 +1,3 @@
-// File: js/movement.js
-// Kontrol sederhana: WASD untuk gerak, panah untuk rotasi
 export function setupMovement(human, camera) {
   let move = { forward: 0, backward: 0, left: 0, right: 0 };
   let rotate = { left: 0, right: 0 };
@@ -25,12 +23,23 @@ export function setupMovement(human, camera) {
   function update() {
     let speed = 0.05;
     let rotSpeed = 0.04;
-    if (move.forward) human.position.z -= speed;
-    if (move.backward) human.position.z += speed;
-    if (move.left) human.position.x -= speed;
-    if (move.right) human.position.x += speed;
+    // Gunakan rotasi untuk arah gerak relatif
+    let direction = new THREE.Vector3();
+    if (move.forward) direction.z -= 1;
+    if (move.backward) direction.z += 1;
+    if (move.left) direction.x -= 1;
+    if (move.right) direction.x += 1;
+    direction.normalize();
+
+    // Rotasi tubuh
     if (rotate.left) human.rotation.y += rotSpeed;
     if (rotate.right) human.rotation.y -= rotSpeed;
+
+    // Transformasi arah sesuai rotasi
+    if (direction.length() > 0) {
+      direction.applyAxisAngle(new THREE.Vector3(0,1,0), human.rotation.y);
+      human.position.addScaledVector(direction, speed);
+    }
 
     requestAnimationFrame(update);
   }
