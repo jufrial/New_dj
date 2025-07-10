@@ -1,3 +1,4 @@
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js';
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
 import { setupMovementWithJoystick } from './movement.js';
 import { createHumanModel } from './human_model/human_model.js';
